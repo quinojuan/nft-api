@@ -14,6 +14,6 @@ app.use(express.json());
 
 app.use("/nft", studentRoutes);
 
-app.listen(port, () => {
-  console.log(`server listening on port: ${port}`);
+app.listen(process.env.PORT || port, () => {
+  console.log(`server listening on port: ${process.env.PORT || port}`);
 });
