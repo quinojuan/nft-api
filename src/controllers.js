@@ -53,9 +53,14 @@ console.log(req.body);
       console.error(error);
     });
 
-  res.send("Exito");
-};
+  };
+  
+  const welcome = (req, res) => {
+  res.json("Welcome to an API where you can create an unreal NFT");
+  // res.send("Welcome to easy create a NFT")
+}
 module.exports = {
   getNft,
   putNft,
+  welcome
 };
