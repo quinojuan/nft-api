@@ -70,8 +70,10 @@ const welcome = (req, res) => {
 
 const deleteImage = async (req, res) => {
   const { public_id } = req.params;
+  console.log(public_id)
   try {
-    await cloudinary.uploader.destroy(public_id);
+    const result = await cloudinary.uploader.destroy(public_id);
+    console.log(result);
     res.status(200).send("ok");
   } catch (error) {
     res.status(400).send("not found");
