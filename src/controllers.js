@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { response } = require("express");
+const cloudinary = require("cloudinary");
 
 const getNft = () => {
   const options = {
@@ -22,16 +22,25 @@ const getNft = () => {
 };
 
 const putNft = async (req, res) => {
-
-  const { clientSecret, projectId, nftName, email, name, description, traitType, value, image } = req.body;
-console.log(req.body);
+  const {
+    clientSecret,
+    projectId,
+    nftName,
+    email,
+    name,
+    description,
+    traitType,
+    value,
+    image,
+  } = req.body;
+  console.log(req.body);
   const options = {
     method: "PUT",
     url: `https://staging.crossmint.io/api/2022-06-09/collections/default-solana/nfts/${nftName}`, //leandro
     headers: {
       "content-type": "application/json",
       "x-client-secret": `${clientSecret}`, // sk_test.pk8ecXDQ.4sEBiSAEz3ViEilri9UyELT915d6c0jG
-      "x-project-id": `${projectId}` // d67d4d9d-10aa-481c-81ae-b150baf8aff6
+      "x-project-id": `${projectId}`, // d67d4d9d-10aa-481c-81ae-b150baf8aff6
     },
     data: {
       recipient: `email:${email}:solana`,
@@ -39,7 +48,7 @@ console.log(req.body);
         name: `${name}`, // leandroNFT,
         image: `${image}`,
         description: `${description}`, // LeaNDRO-description
-        attributes: [{ trait_type: `${traitType}`, value: `${value}`}], // algo / true 
+        attributes: [{ trait_type: `${traitType}`, value: `${value}` }], // algo / true
       },
     },
   };
@@ -52,15 +61,26 @@ console.log(req.body);
     .catch(function (error) {
       console.error(error);
     });
+};
 
-  };
-  
-  const welcome = (req, res) => {
+const welcome = (req, res) => {
   res.json("Welcome to an API where you can create an unreal NFT");
   // res.send("Welcome to easy create a NFT")
-}
+};
+
+const deleteImage = async (req, res) => {
+  const { public_id } = req.params;
+  try {
+    await cloudinary.uploader.destroy(public_id);
+    res.status(200).send("ok");
+  } catch (error) {
+    res.status(400).send("not found");
+  }
+};
+
 module.exports = {
   getNft,
   putNft,
-  welcome
+  welcome,
+  deleteImage,
 };
