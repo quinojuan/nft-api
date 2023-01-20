@@ -1,12 +1,14 @@
 const axios = require("axios");
 const cloudinary = require("cloudinary");
 
+// NO LA ESTOY UTILIZANDO POR EL MOMENTO
 const getNft = () => {
+  const { id } = req.params;
   const options = {
     method: "GET",
-    url: `https://staging.crossmint.io/api/2022-06-09/collections/default-solana/nfts/${variable1}`,
+    url: `https://staging.crossmint.io/api/2022-06-09/collections/default-solana/nfts/${id}`,
     headers: {
-      "x-client-secret": "sk_test.48qATEKS.XjtH1Rizp7YI2swJuYq884HHRKYn1BWN",
+      "x-client-secret": "sk_test.w6RqyPVx.qlMMRjgEf6zUyANkb1JZQ757cBgQblod",
       "x-project-id": "d67d4d9d-10aa-481c-81ae-b150baf8aff6",
     },
   };
@@ -39,16 +41,16 @@ const putNft = async (req, res) => {
     url: `https://staging.crossmint.io/api/2022-06-09/collections/default-solana/nfts/${nftName}`, //leandro
     headers: {
       "content-type": "application/json",
-      "x-client-secret": `${clientSecret}`, // sk_test.pk8ecXDQ.4sEBiSAEz3ViEilri9UyELT915d6c0jG
-      "x-project-id": `${projectId}`, // d67d4d9d-10aa-481c-81ae-b150baf8aff6
+      "x-client-secret": `${clientSecret}`,
+      "x-project-id": `${projectId}`,
     },
     data: {
       recipient: `email:${email}:solana`,
       metadata: {
-        name: `${name}`, // leandroNFT,
+        name: `${name}`,
         image: `${image}`,
-        description: `${description}`, // LeaNDRO-description
-        attributes: [{ trait_type: `${traitType}`, value: `${value}` }], // algo / true
+        description: `${description}`,
+        attributes: [{ trait_type: `${traitType}`, value: `${value}` }],
       },
     },
   };
@@ -64,13 +66,12 @@ const putNft = async (req, res) => {
 };
 
 const welcome = (req, res) => {
-  res.json("Welcome to an API where you can create an unreal NFT");
-  // res.send("Welcome to easy create a NFT")
+  res.json("Welcome to an API where you can create your first Test NFT");
 };
 
 const deleteImage = async (req, res) => {
   const { public_id } = req.params;
-  console.log(public_id)
+  console.log(public_id);
   try {
     const result = await cloudinary.uploader.destroy(public_id);
     console.log(result);

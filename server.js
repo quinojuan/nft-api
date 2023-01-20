@@ -12,6 +12,7 @@ cloudinary.config({
 });
 
 const nfts = require("./src/routes");
+const { welcome } = require("./src/controllers");
 
 const app = express();
 const port = process.env.PORT;
@@ -20,6 +21,7 @@ app.use(cors()); // Use this after the variable declaration
 app.use(morgan("dev"));
 app.use(express.json());
 
+app.get("/", welcome);
 app.use("/nft", nfts);
 
 app.listen(port, () => {
